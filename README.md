@@ -1,50 +1,131 @@
 # ⚡ Velox
 
-<p align="center">
-  <strong>A blazing-fast, search-augmented AI chat assistant powered by Groq & Llama 3.3.</strong>
-</p>
-
-<p align="center">
-  <a href="https://velox-henna.vercel.app">🚀 Live Demo</a> •
-  <a href="#-key-features">✨ Features</a> •
-  <a href="#-tech-stack">🛠️ Tech Stack</a> •
-  <a href="#-architecture--workflow">⚙️ Architecture</a> •
-  <a href="#-getting-started">🔧 Quick Start</a>
-</p>
+A blazing-fast AI chat assistant powered by **Groq + Llama 3.3 70B**. Featuring real-time web search capabilities, multi-turn conversation memory, and a sleek, modern dark-themed React frontend.
 
 ---
 
-Velox is a modern, full-stack AI chat application designed for near-instantaneous responses. By pairing the **Groq inference engine** with **Llama 3.3 70B** and integrating real-time web search capabilities via **Tavily**, Velox delivers highly accurate, contextual, and up-to-date answers in milliseconds.
+## 🚀 Live Demo
 
-### 🌐 Live Deployment
 * **Frontend:** [velox-henna.vercel.app](https://velox-henna.vercel.app)
-* **Backend API:** [velox-backend-6sqt.onrender.com](https://velox-backend-6sqt.onrender.com)
+* **Backend:** [velox-backend-6sqt.onrender.com](https://velox-backend-6sqt.onrender.com)
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-* **⚡ Blazing Fast Inference:** Powered by Groq’s LPU (Language Processing Unit) architecture for the fastest LLM responses available.
-* **🧠 Smart Multi-Turn Memory:** Maintains conversational context across multiple turns using session-based memory tracking.
-* **🌐 Real-Time Web Search:** Dynamically invokes the Tavily API when real-time or factual data is required to supplement the LLM's knowledge.
-* **💬 Persistent Chat History:** User-friendly sidebar navigation to seamlessly switch between multiple conversations.
-* **🎨 Premium UI/UX:** A clean, modern, fully responsive dark-themed interface built for both desktop and mobile screens.
+* **⚡ Blazing Fast:** Powered by the Groq inference engine for the fastest LLM API response times.
+* **🧠 Smart Context:** Multi-turn conversation memory sustained per session.
+* **🌐 Real-time Web Search:** Native Tavily API integration for fetching up-to-date answers from the web.
+* **💬 Chat History:** Easily switch between multiple distinct conversations.
+* **🎨 Clean UI:** Beautiful, modern, dark-themed responsive frontend built with React.
+* **📱 Responsive Design:** Optimally designed for seamless use across mobile and desktop screens.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Description |
-| :--- | :--- | :--- |
-| **Frontend** | `React.js`, `Vite` | Fast, reactive SPA framework paired with a modern UI layer. |
-| **Backend** | `Node.js`, `Express.js` | Scalable REST API architecture handling routing and agent logic. |
-| **LLM Engine** | `Llama 3.3 70B` via `Groq` | State-of-the-art open model optimized for ultra-low latency. |
-| **Search Engine**| `Tavily API` | Purpose-built search engine for LLMs to pull real-time web context. |
-| **In-Memory Cache**| `Node-Cache` | Lightweight internal caching mechanism for session/thread memory. |
-| **Hosting** | `Vercel` (FE) / `Render` (BE) | Optimized, automated continuous deployment environments. |
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React.js, Vite |
+| **Backend** | Node.js, Express.js |
+| **LLM** | Llama 3.3 70B (via Groq) |
+| **Web Search** | Tavily API |
+| **Memory** | Node-Cache (In-memory storage) |
+| **Frontend Deploy** | Vercel |
+| **Backend Deploy** | Render |
 
 ---
 
-## ⚙️ Architecture & Workflow
+## 📁 Project Structure
 
-The application operates as a classic tool-calling agent loop:
+```text
+Velox/
+├── Frontend/          # React frontend (Vite)
+│   ├── src/
+│   │   └── App.jsx     # Main chat UI
+│   └── package.json
+├── chatbot.js          # LLM agent loop with tool calling
+├── server.js           # Express REST API
+├── .gitignore
+└── package.json
+```
+
+## ⚙️ How It Works
+
+```
+User Message
+            │
+            ▼
+ Express Server (server.js)
+            │
+            ▼
+ AI Agent Loop (chatbot.js)
+            │
+            ▼
+   Groq API (Llama 3.3 70B)
+            │
+     [Needs web search?] ──► Yes ──► Tavily API ──► Results back to LLM
+            │
+            ▼
+     Final Response ──► User
+```
+
+## 🔧 Run Locally
+
+1. Clone the repository
+```
+git clone [https://github.com/Sakshi123509/Velox.git](https://github.com/Sakshi123509/Velox.git)
+cd Velox
+```
+2. Setup the Backend
+```
+# Install root/backend dependencies
+npm install
+
+# Create a .env file in the root directory and add your keys:
+# GROQ_API_KEY=your_groq_api_key
+# TAVILY_API_KEY=your_tavily_api_key
+
+# Start the Express server
+node server.js
+```
+Note: The backend server will run locally on http://localhost:3001
+
+3. Setup the Frontend
+
+```
+# Navigate to the frontend folder
+cd Frontend
+
+# Install frontend dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+Note: The frontend application will run locally on http://localhost:5173
+
+## 🌐 API Reference
+
+Send a Message
+
+* Endpoint: POST /chat
+* Content-Type: application/json
+
+Request Body:
+```
+{
+  "message": "What is the latest news in AI?",
+  "threadId": "unique-session-id"
+}
+```
+Response Body:
+```
+{
+  "message": "Here's the latest in AI..."
+}
+```
+## 🔑 Get API Keys
+
+Groq API Key: Obtain from console.groq.com
+Tavily API Key: Obtain from tavily.com
